@@ -1,15 +1,20 @@
-import { Button } from '@/components/ui/button'
-import { Modal } from '@/components/ui/modal'
-import { UserButton } from '@clerk/nextjs'
-import Image from 'next/image'
 
-export default function Home() {
-  return (
-    <div className='p-10'>
-        <UserButton afterSignOutUrl="/"/>
-        <Modal title="add store" description="add them" isOpen onClose={()=>{}}> 
-            
-        </Modal>
-    </div>
-  )
+"use client";
+
+import { useEffect } from "react";
+import { useParams } from "next/navigation";
+
+import { useStoreModal } from "@/hooks/useStoreModal";
+
+const HomePage=()=> {
+    const onOpen = useStoreModal((state: { onOpen: any; }) => state.onOpen);
+    const isOpen = useStoreModal((state: { isOpen: any; }) => state.isOpen);
+  
+    useEffect(() => {
+      if (!isOpen) {
+        onOpen();
+      }
+    }, [isOpen, onOpen]);
+  return null
 }
+export default HomePage
