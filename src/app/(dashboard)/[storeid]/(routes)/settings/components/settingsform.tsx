@@ -9,7 +9,6 @@ import { Trash } from "lucide-react"
 import { Store } from "@prisma/client"
 import { useParams, useRouter } from "next/navigation"
 import { useState } from "react"
-
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {
@@ -42,7 +41,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
   const params = useParams();
   const router = useRouter();
   const origin = useOrigin();
-
+console.log(params);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -54,7 +53,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
   const onSubmit = async (data: SettingsFormValues) => {
     try {
       setLoading(true);
-      await axios.patch(`/api/stores/${params.storeId}`, data);
+      await axios.patch(`/api/stores/${initialData.id}`, data);
       router.refresh();
       toast.success('Store updated.');
     } catch (error: any) {
@@ -67,7 +66,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/stores/${params.storeId}`);
+      await axios.delete(`/api/stores/${initialData.id}`);
       router.refresh();
       router.push('/');
       toast.success('Store deleted.');
@@ -125,7 +124,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
       <ApiAlert 
         title="NEXT_PUBLIC_API_URL" 
         variant="public" 
-        description={`${origin}/api/${params.storeId}`}
+        description={`${origin}/api/${initialData.id}`}
       />
     </>
   );
